@@ -1,20 +1,25 @@
 import random as rd
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set()
+from collections import defaultdict
 
 n = 10
 
-first, second, third = [], [], []
+picks = defaultdict(list)
 for i in range(10000):
         
-        first.append(rd.randrange(n))
-        second.append(rd.randrange(first[-1], n))
-        third.append(rd.randrange(second[-1], n+1))
+        picks['First'].append(rd.randrange(n))
+        picks['Second'].append(
+                rd.randrange(picks['First'][-1], n))
+        picks['Third'].append(
+                rd.randrange(picks['Second'][-1], n+1))
 
 
-sns.distplot(first, hist=False)
-sns.distplot(second, hist=False)
-sns.distplot(third, hist=False)
+order = ['First', 'Second', 'Third']
+for label in order:
+
+        sns.distplot(picks[label], kde=False, label=label, hist_kws={'alpha':0.6})
+
+plt.legend(loc='best')
 
 plt.show()
-
